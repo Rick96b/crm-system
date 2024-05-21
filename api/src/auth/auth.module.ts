@@ -14,7 +14,7 @@ import * as process from 'process';
   exports: [AuthService, JwtModule],
   imports: [
     JwtModule.register({
-      secret: process.env.JWT_TOKEN || 'Secret',
+      secret: process.env.JWT_SECRET || 'Secret',
       signOptions: {
         expiresIn: '24h'
       }
