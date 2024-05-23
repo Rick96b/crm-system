@@ -19,3 +19,13 @@ model User {
   password String
   email String @unique
 }
+
+model Order {
+  id Int @id @default(autoincrement())
+  title String
+  price Int
+  status String
+  client String
+  dateOfCreation DateTime @default(now())
+  commentaries Json[]
+}
