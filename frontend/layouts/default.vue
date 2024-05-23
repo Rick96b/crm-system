@@ -1,10 +1,22 @@
 <script setup lang="ts">
+const authStore = useAuthStore()
+const isLoadingStore = useIsLoadingStore()
+const router = useRouter()
 
+onMounted(async () => {
+    if(localStorage.getItem('token')) {
+
+        isLoadingStore.set(false)
+    }
+    await router.push('/login')
+    isLoadingStore.set(false)
+})
 </script>
 
 <template>
-    <section class="grid" style="min-height: 100vh;">
-        <LayoutSidebar />
+    <LayoutLoader v-if="isLoadingStore.isLoading"/>
+    <section v-else :class="{grid: authStore.isAuth}" style="min-height: 100vh;">
+        <LayoutSidebar v-if="authStore.isAuth"/>
         <div>
             <slot />
         </div>
