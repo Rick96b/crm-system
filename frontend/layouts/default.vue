@@ -4,12 +4,16 @@ const isLoadingStore = useIsLoadingStore()
 const router = useRouter()
 
 onMounted(async () => {
-    if(localStorage.getItem('token')) {
-
+    try {
+        console.log('why')
+        await authStore.authByToken()
+    } 
+    catch(error) {
+        console.log(error)
+        await router.push('/login')
+    } finally {
         isLoadingStore.set(false)
     }
-    await router.push('/login')
-    isLoadingStore.set(false)
 })
 </script>
 

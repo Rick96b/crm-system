@@ -20,8 +20,8 @@ export class AuthController {
 
   @Post('authToken')
   @HttpCode(200)
-  async authByToken(@Body() token: string) {
-    return this._authService.authByToken(token);
+  async authByToken(@Body() dto: {token: string}) {
+    return this._authService.authByToken(dto.token);
   }
 
 }
