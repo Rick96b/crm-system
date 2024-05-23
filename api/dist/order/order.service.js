@@ -33,6 +33,18 @@ let OrderService = class OrderService {
         });
         return { ...order, commentaries: formattedCommentaries };
     }
+    async getAllOrder() {
+        const orders = await prisma.order.findMany();
+        let formattedOrders = [];
+        let formattedCommentaries;
+        orders.forEach(order => {
+            order.commentaries.forEach((commentary) => {
+                formattedCommentaries.push({ ...commentary, createdAt: new Date(commentary.createdAt) });
+            });
+            formattedOrders.push({ ...order, commentaries: formattedCommentaries });
+        });
+        return formattedOrders;
+    }
     async postNewOrder(_order) {
         const x = new Date().toISOString();
         const newEntry = await prisma.order.create({

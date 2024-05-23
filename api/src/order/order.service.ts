@@ -7,12 +7,12 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class OrderService {
-    constructor(private __prismaService: PrismaService) {}
+    constructor(private _prismaService: PrismaService) {}
 
-    async getOrderById(_id: number): Promise<{ id: number }> {
-        const order: Order = await this.__prismaService.order.findUnique({
+    async getOrderById(id: number): Promise<{ id: number }> {
+        const order: Order = await this._prismaService.order.findUnique({
             where: {
-                id: _id
+                id: id
             }
         });
 
@@ -28,17 +28,29 @@ export class OrderService {
         return {...order, commentaries: formattedCommentaries} as OrderDto
     }
 
-    async postNewOrder(_order: OrderDto) {
-        const x = new Date().toISOString()
+    async getAllOrder(): Promise<OrderDto[]> {
+        const orders: Order[] = await prisma.order.findMany();
+        let formattedOrders: OrderDto[] = [];
+        
+        orders.forEach(order => {
+            let formattedCommentaries: {text: string, createdAt: Date}[];
+            order.commentaries.forEach((commentary: {text: string, createdAt: string}) => {
+                formattedCommentaries.push({...commentary, createdAt: new Date(commentary.createdAt)});
+            }) 
+            formattedOrders.push({...order, commentaries: formattedCommentaries});   
+        });
+
+        return formattedOrders as OrderDto[];
+    }
+
+    async postNewOrder(order: OrderDto) {
+        let formattedCommentaries: {text: string, createdAt: string}[]
+        order.commentaries.forEach(commentary => {
+            formattedCommentaries.push({...commentary, createdAt: commentary.createdAt.toISOString()})
+        })
+
         const newEntry = await prisma.order.create({
-            data: {
-                title: _order.title,
-                price: _order.price,
-                status: _order.status,
-                client: _order.client,
-                dateOfCreation: _order.dateOfCreation,
-                commentaries: _order.commentaries 
-            }
+            data: {...order, commentaries: formattedCommentaries}
         })
     }
 }
