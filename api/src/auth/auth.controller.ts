@@ -18,4 +18,10 @@ export class AuthController {
     return this._authService.login(dto);
   }
 
+  @Post('authToken')
+  @HttpCode(200)
+  async authByToken(@Body() token: string) {
+    return this._authService.authByToken(token);
+  }
+
 }

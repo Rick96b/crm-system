@@ -9,4 +9,5 @@ export declare class AuthController {
     signIn(dto: UserDto): Promise<{
         token: string;
     }>;
+    authByToken(token: string): Promise<UserDto>;
 }

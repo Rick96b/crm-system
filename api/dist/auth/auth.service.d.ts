@@ -13,4 +13,5 @@ export declare class AuthService {
         token: string;
     }>;
     private generateToken;
+    authByToken(token: string): Promise<UserDto>;
 }
