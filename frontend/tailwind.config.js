@@ -41,7 +41,7 @@ module.exports = {
         DEFAULT: '333ms'
       },
       transitionTimingFunction: {
-        DEFAULT: 'easy-in-out'
+        DEFAULT: 'ease-in-out'
       },
       colors: {
         border: "var(--border)",

@@ -16,6 +16,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@radix-icons/vue": "^1.0.0",
     "@tanstack/vue-query": "^5.37.1",
+    "@vee-validate/nuxt": "^4.12.8",
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
