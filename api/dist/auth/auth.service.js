@@ -64,6 +64,20 @@ let AuthService = class AuthService {
             token: this._jwtService.sign(payload)
         };
     }
+    async authByToken(token) {
+        const decodedJwtToken = this._jwtService.decode(token);
+        const user = await this._prismaService.user.findUnique({
+            where: {
+                id: decodedJwtToken.id
+            }
+        });
+        if (!user) {
+            throw new common_1.UnauthorizedException({
+                message: 'Incorrect Access Token'
+            });
+        }
+        return user;
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

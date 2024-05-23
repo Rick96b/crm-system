@@ -57,10 +57,29 @@ export class AuthService {
 
     return await this.generateToken(user);
   }
+
   private async generateToken(user: User): Promise<{ token: string }> {
     const payload = { email: user.email, id: user.id };
     return {
       token: this._jwtService.sign(payload)
     };
+  }
+
+  async authByToken(token: string): Promise<UserDto> {
+    const decodedJwtToken: { email: string, id: number } = this._jwtService.decode(token);
+    
+    const user = await this._prismaService.user.findUnique({
+      where: {
+        id: decodedJwtToken.id
+      }
+    });
+
+    if(!user) {
+      throw new UnauthorizedException({
+        message: 'Incorrect Access Token'
+      });
+    }
+
+    return user;
   }
 }

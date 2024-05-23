@@ -25,6 +25,9 @@ let AuthController = class AuthController {
     async signIn(dto) {
         return this._authService.login(dto);
     }
+    async authByToken(token) {
+        return this._authService.authByToken(token);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -43,6 +46,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, common_1.Post)('authToken'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "authByToken", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
