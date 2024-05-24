@@ -15,13 +15,13 @@ const prisma_service_1 = require("../prisma.service");
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 let OrderService = class OrderService {
-    constructor(__prismaService) {
-        this.__prismaService = __prismaService;
+    constructor(_prismaService) {
+        this._prismaService = _prismaService;
     }
-    async getOrderById(_id) {
-        const order = await this.__prismaService.order.findUnique({
+    async getOrderById(id) {
+        const order = await this._prismaService.order.findUnique({
             where: {
-                id: _id
+                id: id
             }
         });
         if (!order) {
@@ -36,8 +36,8 @@ let OrderService = class OrderService {
     async getAllOrder() {
         const orders = await prisma.order.findMany();
         let formattedOrders = [];
-        let formattedCommentaries;
         orders.forEach(order => {
+            let formattedCommentaries;
             order.commentaries.forEach((commentary) => {
                 formattedCommentaries.push({ ...commentary, createdAt: new Date(commentary.createdAt) });
             });
@@ -45,17 +45,13 @@ let OrderService = class OrderService {
         });
         return formattedOrders;
     }
-    async postNewOrder(_order) {
-        const x = new Date().toISOString();
+    async postNewOrder(order) {
+        let formattedCommentaries;
+        order.commentaries.forEach(commentary => {
+            formattedCommentaries.push({ ...commentary, createdAt: commentary.createdAt.toISOString() });
+        });
         const newEntry = await prisma.order.create({
-            data: {
-                title: _order.title,
-                price: _order.price,
-                status: _order.status,
-                client: _order.client,
-                dateOfCreation: _order.dateOfCreation,
-                commentaries: _order.commentaries
-            }
+            data: { ...order, commentaries: formattedCommentaries }
         });
     }
 };
