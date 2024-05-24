@@ -6,5 +6,8 @@ export declare class OrderService {
     getOrderById(_id: number): Promise<{
         id: number;
     }>;
+    getAllOrder(): Promise<{
+        orders: OrderDto[];
+    }>;
     postNewOrder(_order: OrderDto): Promise<void>;
 }
