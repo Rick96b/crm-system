@@ -20,6 +20,7 @@
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.11",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "radix-vue": "^1.8.1",

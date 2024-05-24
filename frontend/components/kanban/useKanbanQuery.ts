@@ -10,10 +10,11 @@ export function useKanbanQuery() {
         select(data) {
             const newBoard = KANBAN_DATA
             const orders = data as IOrder[]
-            console.log(data)
+            
             for(const order of orders) {
                 const column = newBoard.find(col => col.id === order.status)
                 if (column) {
+
                     column.items.push({
                         id: order.id,
                         name: order.title,
@@ -24,7 +25,8 @@ export function useKanbanQuery() {
                     })
                 }
             }
-            
+            console.log(newBoard)
+            return newBoard
         }
     })
 }
