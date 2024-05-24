@@ -1,15 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { OrderDto } from './order.interface';
+import { OrderDto, OrderOutDto } from './order.interface';
 import { PrismaService } from 'src/prisma.service';
 import { Order, PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 @Injectable()
 export class OrderService {
     constructor(private _prismaService: PrismaService) {}
 
-    async getOrderById(id: number): Promise<{ id: number }> {
+    async getOrderById(id: number): Promise<OrderOutDto> {
         const order: Order = await this._prismaService.order.findUnique({
             where: {
                 id: id
@@ -25,12 +23,12 @@ export class OrderService {
             formattedCommentaries.push({...commentary, createdAt: new Date(commentary.createdAt)})
         })
 
-        return {...order, commentaries: formattedCommentaries} as OrderDto
+        return {...order, commentaries: formattedCommentaries}
     }
 
-    async getAllOrders(): Promise<OrderDto[]> {
-        const orders: Order[] = await prisma.order.findMany();
-        let formattedOrders: OrderDto[] = [];
+    async getAllOrders(): Promise<OrderOutDto[]> {
+        const orders: Order[] = await this._prismaService.order.findMany();
+        let formattedOrders: OrderOutDto[] = [];
         
         orders.forEach(order => {
             let formattedCommentaries: {text: string, createdAt: Date}[];
@@ -40,7 +38,7 @@ export class OrderService {
             formattedOrders.push({...order, commentaries: formattedCommentaries});   
         });
 
-        return formattedOrders as OrderDto[];
+        return formattedOrders;
     }
 
     async postNewOrder(order: OrderDto) {
@@ -49,7 +47,7 @@ export class OrderService {
             formattedCommentaries.push({...commentary, createdAt: commentary.createdAt.toISOString()})
         })
 
-        const newEntry = await prisma.order.create({
+        const newEntry = await this._prismaService.order.create({
             data: {...order, commentaries: formattedCommentaries}
         })
     }

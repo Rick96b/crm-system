@@ -1,5 +1,4 @@
 export interface OrderDto {
-    id: number;
     title: string;
     price: number;
     status: string;
@@ -9,4 +8,7 @@ export interface OrderDto {
         text: string;
         createdAt: Date;
     }[];
+}
+export interface OrderOutDto extends OrderDto {
+    id: number;
 }
