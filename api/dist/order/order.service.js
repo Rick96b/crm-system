@@ -44,12 +44,25 @@ let OrderService = class OrderService {
         return formattedOrders;
     }
     async postNewOrder(order) {
-        let formattedCommentaries;
-        order.commentaries.forEach(commentary => {
-            formattedCommentaries.push({ ...commentary, createdAt: commentary.createdAt.toISOString() });
-        });
+        console.log(order);
+        let formattedCommentaries = [];
+        if (order.commentaries) {
+            order.commentaries.forEach(commentary => {
+                formattedCommentaries.push({ ...commentary, createdAt: commentary.createdAt.toISOString() });
+            });
+        }
         const newEntry = await this._prismaService.order.create({
             data: { ...order, commentaries: formattedCommentaries }
+        });
+    }
+    async changeStatus(id, newStatus) {
+        return await this._prismaService.order.update({
+            where: {
+                id: +id
+            },
+            data: {
+                status: newStatus
+            }
         });
     }
 };

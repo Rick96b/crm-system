@@ -25,6 +25,9 @@ let OrderController = class OrderController {
     async postOrder(order) {
         return this._orderService.postNewOrder(order);
     }
+    async changeStatus(dto) {
+        return this._orderService.changeStatus(dto.orderId, dto.newStatus);
+    }
     async getAllOrders() {
         return this._orderService.getAllOrders();
     }
@@ -44,6 +47,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "postOrder", null);
+__decorate([
+    (0, common_1.Put)('changeStatus'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "changeStatus", null);
 __decorate([
     (0, common_1.Get)('getAll'),
     __metadata("design:type", Function),

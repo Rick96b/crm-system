@@ -18,7 +18,7 @@ const error = ref('')
 const register = async () => {
     postRegister().then(async (res) => {
         localStorage.setItem('token', res.token)
-        authStore.authByToken(res.token)
+        authStore.authByToken()
         await router.push('/')
     }).catch((err) => {
         error.value = 'Неправильный ввод'
@@ -28,7 +28,7 @@ const register = async () => {
 const login = async () => {
     postLogin().then(async (res) => {
         localStorage.setItem('token', res.token)
-        authStore.authByToken(res.token)
+        authStore.authByToken()
         await router.push('/')
     }).catch((err) => {
         error.value = 'Неизвестный пользователь'
@@ -36,7 +36,7 @@ const login = async () => {
 }
 
 const postRegister = async () => {
-    return $fetch(`${BASE_BACKEND_URL}/auth/signUp`, {
+    return $fetch<{token: string}>(`${BASE_BACKEND_URL}/auth/signUp`, {
         method: "POST",
         body: {
             email: emailRef.value,
@@ -47,7 +47,7 @@ const postRegister = async () => {
 }
 
 const postLogin = async () => {
-    return $fetch(`${BASE_BACKEND_URL}/auth/signIn`, {
+    return $fetch<{token: string}>(`${BASE_BACKEND_URL}/auth/signIn`, {
         method: "POST",
         body: {
             email: emailRef.value,
