@@ -16,11 +16,17 @@ exports.OrderController = void 0;
 const common_1 = require("@nestjs/common");
 const order_service_1 = require("./order.service");
 let OrderController = class OrderController {
-    constructor(orderService) {
-        this.orderService = orderService;
+    constructor(_orderService) {
+        this._orderService = _orderService;
     }
     async getOrderById(id) {
-        return this.orderService.getOrderById(id);
+        return this._orderService.getOrderById(id);
+    }
+    async postOrder(order) {
+        return this._orderService.postNewOrder(order);
+    }
+    async getAllOrders() {
+        return this._orderService.getAllOrders();
     }
 };
 exports.OrderController = OrderController;
@@ -31,6 +37,19 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getOrderById", null);
+__decorate([
+    (0, common_1.Post)('postOrder'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "postOrder", null);
+__decorate([
+    (0, common_1.Get)('getAll'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getAllOrders", null);
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

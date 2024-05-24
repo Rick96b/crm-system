@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
 let OrderService = class OrderService {
     constructor(_prismaService) {
         this._prismaService = _prismaService;
@@ -33,8 +31,8 @@ let OrderService = class OrderService {
         });
         return { ...order, commentaries: formattedCommentaries };
     }
-    async getAllOrder() {
-        const orders = await prisma.order.findMany();
+    async getAllOrders() {
+        const orders = await this._prismaService.order.findMany();
         let formattedOrders = [];
         orders.forEach(order => {
             let formattedCommentaries;
@@ -50,7 +48,7 @@ let OrderService = class OrderService {
         order.commentaries.forEach(commentary => {
             formattedCommentaries.push({ ...commentary, createdAt: commentary.createdAt.toISOString() });
         });
-        const newEntry = await prisma.order.create({
+        const newEntry = await this._prismaService.order.create({
             data: { ...order, commentaries: formattedCommentaries }
         });
     }
