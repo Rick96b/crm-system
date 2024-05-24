@@ -7,6 +7,11 @@ export class OrderController {
 
     @Get('getOrder/:id')
     async getOrderById(@Param('id', ParseIntPipe) id: number) {
-        return this.orderService.getOrderById(id)
-    }    
+        return this.orderService.getOrderById(id);
+    }
+    
+    @Get('getAll')
+    async getAllOrders() {
+        return this.orderService.getAllOrders();
+    }
 }

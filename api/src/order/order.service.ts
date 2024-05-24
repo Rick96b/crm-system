@@ -28,7 +28,7 @@ export class OrderService {
         return {...order, commentaries: formattedCommentaries} as OrderDto
     }
 
-    async getAllOrder(): Promise<OrderDto[]> {
+    async getAllOrders(): Promise<OrderDto[]> {
         const orders: Order[] = await prisma.order.findMany();
         let formattedOrders: OrderDto[] = [];
         
