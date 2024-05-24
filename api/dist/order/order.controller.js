@@ -22,6 +22,9 @@ let OrderController = class OrderController {
     async getOrderById(id) {
         return this.orderService.getOrderById(id);
     }
+    async getAllOrders() {
+        return this.orderService.getAllOrders();
+    }
 };
 exports.OrderController = OrderController;
 __decorate([
@@ -31,6 +34,12 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getOrderById", null);
+__decorate([
+    (0, common_1.Get)('getAll'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getAllOrders", null);
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

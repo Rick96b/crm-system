@@ -5,4 +5,5 @@ export declare class OrderController {
     getOrderById(id: number): Promise<{
         id: number;
     }>;
+    getAllOrders(): Promise<import("./order.interface").OrderDto[]>;
 }

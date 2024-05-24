@@ -33,7 +33,7 @@ let OrderService = class OrderService {
         });
         return { ...order, commentaries: formattedCommentaries };
     }
-    async getAllOrder() {
+    async getAllOrders() {
         const orders = await prisma.order.findMany();
         let formattedOrders = [];
         orders.forEach(order => {
