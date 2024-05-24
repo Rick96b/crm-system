@@ -4,7 +4,8 @@ import { useKanbanQuery } from '~/components/kanban/useKanbanQuery';
 
 const dragCardRef = ref<ICard | null>(null)
 const sourceColumnRef = ref<IColumn | null>(null)
-useKanbanQuery()
+const {data, isLoading, refetch} = useKanbanQuery()
+console.log(data)
 </script>
 
 <template>
