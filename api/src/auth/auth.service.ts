@@ -37,6 +37,7 @@ export class AuthService {
         message: 'Incorrect email or password'
       });
     }
+
     return user
   }
   async register(dto: UserDto): Promise<{ token: string }> {
@@ -59,6 +60,7 @@ export class AuthService {
   }
 
   private async generateToken(user: User): Promise<{ token: string }> {
+    console.log(user)
     const payload = { email: user.email, id: user.id };
     return {
       token: this._jwtService.sign(payload)
